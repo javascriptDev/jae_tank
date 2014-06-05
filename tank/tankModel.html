@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css" media="screen">
+        body {
+
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .cube {
+            position: absolute;
+            top: 220px;
+            left: 360px;
+
+        }
+
+        .cube2 {
+            top: 30px;
+            left: 360px;
+        }
+
+        .face, .face1 {
+            position: absolute;
+            overflow: hidden;
+            font-family: monospace;
+            font-size: 24px;
+        }
+
+        .face1 {
+            width: 120px;
+            height: 120px;
+        }
+
+        .face {
+            width: 200px;
+            height: 200px;
+        }
+
+        .top {
+            top: 0;
+            left: 86px;
+            background: goldenrod;
+            color: #999;
+        }
+
+        .left {
+            top: 165px;
+            left: 0;
+            background: darkgreen;
+            color: #333;
+
+        }
+
+        .right {
+            top: 165px;
+            left: 172px;
+            background: saddlebrown;
+            color: #666;
+        }
+
+        .top, .top1 {
+
+            /*    -webkit-transform: matrix(0.8965754721680534, -0.5176380902050416, 0.8965754721680536, 0.5176380902050415, 0, 0);*/
+            -webkit-transform: rotate(-30deg) skewX(30deg) skewY(0deg) scaleY(0.87);
+            -ms-transform: rotate(-30deg) skewX(30deg) skewY(0deg) scaleY(0.87);
+            -moz-transform: rotate(-30deg) skewX(30deg) skewY(0deg) scaleY(0.87);
+            -o-transform: rotate(-30deg) skewX(30deg) skewY(0deg) scaleY(0.87);
+            transform: rotate(-30deg) skewX(30deg) skewY(0deg) scaleY(0.87);
+        }
+
+        .left, .left1 {
+
+            /*    -webkit-transform: matrix(0.8965754721680536, 0.5176380902050415, 0, 1.035276180410083, 0, 0);*/
+            -webkit-transform: rotate(30deg) skewX(30deg) skewY(0deg);
+            -ms-transform: rotate(30deg) skewX(30deg) skewY(0deg);
+            -moz-transform: rotate(30deg) skewX(30deg) skewY(0deg);
+            -o-transform: rotate(30deg) skewX(30deg) skewY(0deg);
+            transform: rotate(30deg) skewX(30deg) skewY(0deg);
+        }
+
+        .right, .right1 {
+
+            /*    -webkit-transform: matrix(0.8965754721680536, -0.5176380902050415, 0, 1.035276180410083, 0, 0);*/
+            -webkit-transform: rotate(-30deg) skewX(-30deg) skewY(0deg);
+            -ms-transform: rotate(-30deg) skewX(-30deg) skewY(0deg);
+            -moz-transform: rotate(-30deg) skewX(-30deg) skewY(0deg);
+            -o-transform: rotate(-30deg) skewX(-30deg) skewY(0deg);
+            transform: rotate(-30deg) skewX(-30deg) skewY(0deg);
+        }
+
+        .top1 {
+            top: 55px;
+            left: 100px;
+            background: goldenrod;
+            color: #999;
+        }
+
+        .left1 {
+            top: 155px;
+            left: 50px;
+            background: darkgreen;
+            color: #333;
+        }
+
+        .right1 {
+            top: 155px;
+            left: 150px;
+            background: saddlebrown;
+            color: #666;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="cube">
+    <div class="face top">
+
+    </div>
+    <div class="face left">
+
+    </div>
+    <div class="face right">
+
+    </div>
+    <div class="face shadow"></div>
+</div>
+
+<div class="cube2">
+    <div class="face1 top1">
+
+    </div>
+    <div class="face1 left1">
+
+    </div>
+    <div class="face1 right1">
+
+    </div>
+
+</div>
+</body>
+</html>

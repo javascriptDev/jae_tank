@@ -1,0 +1,40 @@
+/**
+ * Created by indice on 2014/5/19.
+ */
+
+
+//内置障碍物类型
+var obstructionType = {
+    //不可击穿的
+    impenetrable: 'impenetrable',
+    //可击穿的
+    breakdown: 'breakdown',
+    //可被无视，直接穿过
+    ignore: 'ignore'
+
+
+
+}
+
+
+//障碍物 类
+function Obstruction(o) {
+    //皮肤
+    this.Material = new Material(o.material) || built_in_material.a;
+    //宽度
+    this.width = o.width || 30;
+    //高度
+    this.height = o.height || 30;
+    //坐标
+    this.position = o.position || {x: 0, y: 0};
+    //类型
+    this.type = o.type || obstructionType.ignore;
+}
+
+Obstruction.prototype = {
+    type: otype.obstruction,
+
+    render: function () {
+    }
+}
+
