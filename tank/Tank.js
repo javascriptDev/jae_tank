@@ -38,14 +38,10 @@ function Tank(o) {
     //坦克的宽高
     this.width = 30;
     this.height = 30;
-
-
     //初始化
     this.init();
-
     //等级不同拥有不同的属性
     var baseProper = this.getBaseProperty(o.level || 1);
-
     //防御力
     this.Defense = o.defense || baseProper.defense;
     //移动速度
@@ -54,7 +50,9 @@ function Tank(o) {
     this.atk = baseProper.baseAtk;
     //攻击速度
     this.firingSpeed = baseProper.firingSpeed;
+    //攻击cd时间(ms)
     this.cd = 300;
+
 
 
 }

@@ -79,7 +79,7 @@ Bullet.prototype = {
     },
     //子弹移动检测
     move: function () {
-        console.log(ds.oMgr.getObj(dataType.tank)[0].position);
+        console.log(ds.oMgr.getObj(dataType.tank)[0].position.y + '--' + this.position.y);
         var me = this;
         if (!this.isHitTank() && !this.isHitObstruction() && !this.isHitWall()) {
             //todo:移动子弹
