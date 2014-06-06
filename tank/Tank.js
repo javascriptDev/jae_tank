@@ -267,11 +267,16 @@ Tank.prototype = {
             dire = this.direction;
         var ishit = false;
         buffs.forEach(function (buff) {
-            var tp = buff.position;
-            //条件是 子弹的xy在 坦克xy之内
+            var bp = buff.position;
             switch (dire) {
                 case direction.up:
-                    ;
+                    //判断条件
+                    //1.确保坦克的右边缘在 buff最左侧的右边
+                    //2.确保坦克的左边缘在 buff 左右边的左边
+                    //3.确保坦克y轴搞好碰到buff
+                    if ((pos.x + me.width > bp.x) && (pos.x < bp.x + buff.width) && (pos.y <= bp.y)) {
+                        ishit = true;
+                    }
                     break;
                 case direction.left:
                     ;
@@ -286,12 +291,13 @@ Tank.prototype = {
                     return;
                     break;
             }
-//            if (( pos.x > tp.x && pos.x < (tp.x + buff.width)) && (pos.y > (tp.y - buff.height) && pos.y < tp.y)) {
-//                buff.destroy();
-//                this.pub(baseEvent.buffBegin, me, buff);
-//                ishit = true;
-//            }
+//
         })
+        if (ishit) {
+            buff.destroy();
+            this.pub(baseEvent.buffBegin, me, buff);
+
+        }
         return ishit;
     }
 }
