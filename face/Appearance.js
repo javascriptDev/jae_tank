@@ -27,5 +27,25 @@ var BuiltIn_Appearance = {
         cls: 'bullet-1',
         material: BuiltIn_Material.a
 
+    }),
+    o1: new Appearance({
+        cls: 'o-1',
+        material: BuiltIn_Material.a
+    }),
+    o2: new Appearance({
+        cls: 'o-2',
+        material: BuiltIn_Material.a
+    }),
+    o3: new Appearance({
+        cls: 'o-3',
+        material: BuiltIn_Material.a
+    }),
+    buff1: new Appearance({
+        cls: 'buff-1',
+        material: BuiltIn_Material.a
+    }),
+    buff2: new Appearance({
+        cls: 'buff-2',
+        material: BuiltIn_Material.a
     })
 }

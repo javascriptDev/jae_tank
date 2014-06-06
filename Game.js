@@ -17,16 +17,18 @@ var Game = {
             var options = {
                 buffs: [
                     BuiltIn_Buff.addBulletSpeed({
-                            position: {x: 0, y: 0},
+                            position: {x: 100, y: 100},
                             duration: 10
                         }
                     ),
-                    BuiltIn_Buff.addMoveSpeed(10, 10)
+                    BuiltIn_Buff.addMoveSpeed({
+                        position: {x: 220, y: 190}
+                    })
                 ],
                 obstructions: [
                     BuiltIn_Obstruction.a(30, 30),
-                    BuiltIn_Obstruction.a(50, 30),
-                    BuiltIn_Obstruction.b(80, 0)
+                    BuiltIn_Obstruction.b(50, 30),
+                    BuiltIn_Obstruction.b(80, 10)
                 ],
                 tanks: [
                     BuiltIn_Tank.hard({position: {x: 100, y: 200}}),

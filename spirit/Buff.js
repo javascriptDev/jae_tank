@@ -11,12 +11,17 @@ function Buff(o) {
     this.effect = o.effect || null;
     //开始时间
     this.beginTime = 0;
+    //表面积
+    this.width = 40;
+    this.height = 40;
     //持续时间
     this.duration = o.duration || 20;
     //结束时间
     this.endTime = 0;
     //外观
-    this.appearance = o.appearance || BuiltIn_Appearance.b;
+    this.appearance = o.appearance || BuiltIn_Appearance.buff1;
+    //渲染
+    this.render();
 
 }
 Buff.prototype = {
@@ -41,6 +46,19 @@ Buff.prototype = {
         }, 1000)
     },
     end: function () {
+    },
+    render: function () {
+        var position = this.position;
+        var o = document.createElement('span');
+        o.className = this.appearance.cls;
+        this.el = o;
+        var s = o.style;
+        s.width = this.width + 'px';
+        s.height = this.height + 'px';
+        s.position = 'absolute';
+        s.top = position.y + 'px';
+        s.left = position.x + 'px';
+        document.body.appendChild(o);
     }
 
 }
@@ -53,7 +71,8 @@ var BuiltIn_Buff = {
         return new Buff({
             position: o.positon,
             effect: Built_In_Effect.addMoveSpeed,
-            duration: 5
+            duration: 5,
+            appearance: BuiltIn_Appearance.buff2
         })
     },
     //增加射速
@@ -61,7 +80,8 @@ var BuiltIn_Buff = {
         return new Buff({
             position: o.position,
             effect: Built_In_Effect.addBulletSpeed,
-            duration: 20
+            duration: 20,
+            appearance: BuiltIn_Appearance.buff1
         })
     }
 

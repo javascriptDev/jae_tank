@@ -17,3 +17,7 @@ function Effect(o) {
     this.value = o.val || 0;
 }
 
+
+
+
+

@@ -5,18 +5,20 @@
 var BuiltIn_Obstruction = {
     a: function (position) {
         return  new Obstruction({
-            material: BuiltIn_Material.b,
+            appearance: BuiltIn_Appearance.o1,
             width: 200,
             height: 100,
-            position: position
+            position: position,
+            type: obstructionType.impenetrable
         })
     },
     b: function (position) {
         return new Obstruction({
-            material: BuiltIn_Material.a,
+            appearance: BuiltIn_Appearance.o2,
             width: 200,
             height: 100,
-            position: position
+            position: position,
+            type: obstructionType.impenetrable
         })
     }
 }

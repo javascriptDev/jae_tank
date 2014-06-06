@@ -11,16 +11,13 @@ var obstructionType = {
     breakdown: 'breakdown',
     //可被无视，直接穿过
     ignore: 'ignore'
-
-
-
 }
 
 
 //障碍物 类
 function Obstruction(o) {
     //皮肤
-    this.Material = new Material(o.material) || built_in_material.a;
+    this.appearance = o.appearance || BuiltIn_Appearance.o1;
     //宽度
     this.width = o.width || 30;
     //高度
@@ -29,12 +26,26 @@ function Obstruction(o) {
     this.position = o.position || {x: 0, y: 0};
     //类型
     this.type = o.type || obstructionType.ignore;
+    //渲染
+    this.render();
 }
 
 Obstruction.prototype = {
     type: otype.obstruction,
 
     render: function () {
+        var position = this.position;
+        var o = document.createElement('span');
+        o.className = this.appearance.cls;
+        this.el = o;
+        var s = o.style;
+        s.width = this.width + 'px';
+        s.height = this.height + 'px';
+        s.position = 'absolute';
+        s.top = position.y + 'px';
+        s.left = position.x + 'px';
+        document.body.appendChild(o);
+
     }
 }
 
