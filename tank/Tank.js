@@ -63,7 +63,6 @@ Tank.prototype = {
     //添加buff
     addBuff: function (buff) {
         this.buffs.push(buff);
-        console.log('tank=' + this.id + ' -- buff Name=' + buff.effect + '  begin');
     },
     //删除buff
     delBuff: function (buff) {
@@ -171,6 +170,74 @@ Tank.prototype = {
 
             }
         )
+    },
+    //撞击障碍物
+    isHitObstruction: function () {
+        var me = this;
+        var obstructions = ds.oMgr.getObj(dataType.obs);
+        var me = this,
+            pos = this.position,
+            dire = this.direction;
+        var ishit = false;
+        obstructions.forEach(function (obstruction) {
+            var tp = obstruction.position;
+            //条件是 子弹的xy在 坦克xy之内
+            if (( pos.x > tp.x && pos.x < (tp.x + obstruction.width)) && (pos.y > (tp.y - obstruction.height) && pos.y < tp.y)) {
+                me.quarry = obstruction;
+                ishit = true;
+            }
+        })
+        return ishit;
+    },
+    //检测是否击中坦克
+    isHitTank: function () {
+//        var tanks = ds.oMgr.getObj(dataType.tank);
+//        var me = this;
+//        var pos = this.position;
+//        var ishit = false;
+//        for (var i = 0, len = tanks.length; i < len; i++) {
+//            var tank = tanks[i];
+//            var tp = tank.position;
+//            //条件是 子弹的xy在 坦克xy之内
+//            if (( pos.x > tp.x && pos.x < (tp.x + tank.width)) && (pos.y > (tp.y - tank.height) && pos.y < tp.y)) {
+//                me.quarry = tank;
+//                ishit = true;
+//                break;
+//            }
+//        }
+//        return ishit;
+        return false;
+    },
+    //检测是否击中墙体
+    isHitWall: function () {
+        //ds.oMgr.getObj(dataType.wall);
+        //todo:临时设置墙的范围
+        var hitWall = false;
+        var left = this.position.x,
+            top = this.position.y;
+        if (left > 500 || top > 500 || left < 0 || top < 0) {
+            hitWall = true;
+        }
+        return hitWall;
+
+    },
+    isHitBuff: function () {
+        var me = this;
+        var buffs = ds.oMgr.getObj(dataType.buff);
+        var me = this,
+            pos = this.position,
+            dire = this.direction;
+        var ishit = false;
+        buffs.forEach(function (buff) {
+            var tp = buff.position;
+            //条件是 子弹的xy在 坦克xy之内
+            if (( pos.x > tp.x && pos.x < (tp.x + buff.width)) && (pos.y > (tp.y - buff.height) && pos.y < tp.y)) {
+                buff.destroy();
+                this.pub(baseEvent.buffBegin, me, buff);
+                ishit = true;
+            }
+        })
+        return ishit;
     }
 }
 
@@ -182,7 +249,18 @@ Tank.prototype.move = {
         var me = this;
         this.position.y -= this.getMoveStep();
         if (dire == this.direction) {
-            this.animate(this.position);
+            if (this.isHitBuff()) {
+                console.log(this.buffs);
+
+            } else if (this.isHitObstruction()) {
+
+
+            } else if (this.isHitWall()) {
+
+            } else {
+                this.animate(this.position);
+            }
+
         } else {//转弯
             this.direction = direction.up;
             this.move.turn.call(me, function move() {
@@ -256,7 +334,7 @@ Tank.prototype.attack = {
             this.cdBegin = new Date().getTime();
             //实例化子弹(把最终攻击力 附加给 子弹.子弹自动检测攻击到的对象)
             //(最终伤害 = 最终攻击力-敌军防御力)
-           //直接position=me.position()这样会是引用，如果改变 position。那么坦克的position也会变.这时候需要深度复制
+            //直接position=me.position()这样会是引用，如果改变 position。那么坦克的position也会变.这时候需要深度复制
             var position = {};
             position.x = me.position.x;
             position.y = me.position.y;

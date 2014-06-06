@@ -59,6 +59,10 @@ Buff.prototype = {
         s.top = position.y + 'px';
         s.left = position.x + 'px';
         document.body.appendChild(o);
+    },
+    destroy: function () {
+        this.el.parentNode.removeChild(this.el);
+        ds.oMgr.del(dataType.buff, this);
     }
 
 }
@@ -70,7 +74,7 @@ var BuiltIn_Buff = {
     addMoveSpeed: function (o) {
         return new Buff({
             position: o.position,
-            effect: Built_In_Effect.addMoveSpeed,
+            effect: Built_In_Effect.addMoveSpeed(),
             duration: 5,
             appearance: BuiltIn_Appearance.buff2
         })
@@ -79,7 +83,7 @@ var BuiltIn_Buff = {
     addBulletSpeed: function (o) {
         return new Buff({
             position: o.position,
-            effect: Built_In_Effect.addBulletSpeed,
+            effect: Built_In_Effect.addBulletSpeed(),
             duration: 20,
             appearance: BuiltIn_Appearance.buff1
         })
