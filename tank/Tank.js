@@ -256,13 +256,20 @@ Tank.prototype.attack = {
             this.cdBegin = new Date().getTime();
             //实例化子弹(把最终攻击力 附加给 子弹.子弹自动检测攻击到的对象)
             //(最终伤害 = 最终攻击力-敌军防御力)
+           //直接position=me.position()这样会是引用，如果改变 position。那么坦克的position也会变.这时候需要深度复制
+            var position = {};
+            position.x = me.position.x;
+            position.y = me.position.y;
+            var direction = me.direction;
+            var atk = me.atk + me.weapon.atk;
+            var speed = me.firingSpeed + me.weapon.speed;
             var bullet = this.weapon.bullet({
-                position: me.position,
+                position: position,
                 owner: me,
-                direction: me.direction,
-                atk: me.atk + me.weapon.atk,
+                direction: direction,
+                atk: atk,
                 //子弹最终飞行速度
-                speed: me.firingSpeed + me.weapon.speed
+                speed: speed
             });
 
             //添加到共享对象

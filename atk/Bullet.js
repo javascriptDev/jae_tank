@@ -79,7 +79,7 @@ Bullet.prototype = {
     },
     //子弹移动检测
     move: function () {
-        console.log(ds.oMgr.getObj(dataType.tank)[0].position.y + '--' + this.position.y);
+
         var me = this;
         if (!this.isHitTank() && !this.isHitObstruction() && !this.isHitWall()) {
             //todo:移动子弹
@@ -88,26 +88,26 @@ Bullet.prototype = {
             switch (this.direction) {
                 case direction.up:
                     el.top = parseInt(el.top) - step + 'px';
-                    this.position.y -= step;
+                    me.position.y -= step;
                     break;
                 case direction.left:
                     el.left = parseInt(el.left) - step + 'px';
-                    this.position.x -= step;
+                    me.position.x -= step;
                     break;
                 case direction.down:
                     el.top = parseInt(el.top) + step + 'px';
-                    this.position.y += step;
+                    me.position.y += step;
                     break;
                 case direction.right:
                     el.left = parseInt(el.left) + step + 'px';
-                    this.position.x += step;
+                    me.position.x += step;
                     break;
                 default:
                     return;
                     break;
             }
             setTimeout(function () {
-                me.move.call(me);
+                me.move();
             }, 18)
         } else {
             this.destroy();
