@@ -9,7 +9,7 @@ var BuiltIn_Obstruction = {
             width: 40,
             height: 30,
             position: position || {x: 0, y: 0},
-            type: obstructionType.impenetrable
+            penetrability: obstructionType.impenetrable
         })
     },
     b: function (position) {
@@ -18,7 +18,7 @@ var BuiltIn_Obstruction = {
             width: 80,
             height: 20,
             position: position || {x: 0, y: 0},
-            type: obstructionType.impenetrable
+            penetrability: obstructionType.impenetrable
         })
     }
 }

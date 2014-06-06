@@ -2,10 +2,6 @@
  * Created by addison on 2014/5/21.
  */
 /**/
-
-
-
-
 //基础数据
 var dataType = {
     //buff
@@ -58,9 +54,10 @@ function DataShare(o) {
         },
         //删除
         del: function (type, o) {
+            var me = this;
             this.getObj(type).forEach(function (item, index) {
                 if (item == o) {
-                    this.getObj(type).splice(index, 1);
+                    me.getObj(type).splice(index, 1);
                 }
             })
         },

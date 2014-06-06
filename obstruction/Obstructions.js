@@ -25,7 +25,7 @@ function Obstruction(o) {
     //坐标
     this.position = o.position || {x: 0, y: 0};
     //类型
-    this.type = o.type || obstructionType.ignore;
+    this.penetrability = o.penetrability || obstructionType.ignore;
     //渲染
   //  this.render();
 }

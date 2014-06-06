@@ -30,7 +30,8 @@ Bullet.prototype = {
     type: otype.bullet,
     //检测是否打到障碍物
     isHitObstruction: function () {
-        var obstructions = ds.oMgr.getObj(dataType.bullet);
+        var me = this;
+        var obstructions = ds.oMgr.getObj(dataType.obs);
         var me = this,
             pos = this.position,
             dire = this.direction;
@@ -39,7 +40,7 @@ Bullet.prototype = {
             var tp = obstruction.position;
             //条件是 子弹的xy在 坦克xy之内
             if (( pos.x > tp.x && pos.x < (tp.x + obstruction.width)) && (pos.y > (tp.y - obstruction.height) && pos.y < tp.y)) {
-                this.quarry = obstruction;
+                me.quarry = obstruction;
                 ishit = true;
             }
         })
@@ -70,8 +71,8 @@ Bullet.prototype = {
         //ds.oMgr.getObj(dataType.wall);
         //todo:临时设置墙的范围
         var hitWall = false;
-        var left = parseInt(this.el.style.left),
-            top = parseInt(this.el.style.top);
+        var left = this.position.x,
+            top = this.position.y;
         if (left > 500 || top > 500 || left < 0 || top < 0) {
             hitWall = true;
         }
@@ -81,11 +82,12 @@ Bullet.prototype = {
     //销毁
     destroy: function () {
         this.el.parentNode.removeChild(this.el);
+        debugger;
         ds.oMgr.del(otype.bullet, this);
         var quarry = this.quarry, type;
-        if (quarry == otype.obstruction) {
+        if (quarry.type == otype.obstruction) {
             type = dataType.obs;
-        } else if (quarry == otype.tank) {
+        } else if (quarry.type == otype.tank) {
             type = dataType.tank;
         }
         ds.oMgr.del(type, quarry);
@@ -100,15 +102,19 @@ Bullet.prototype = {
             switch (this.direction) {
                 case direction.up:
                     el.top = parseInt(el.top) - step + 'px';
+                    this.position.y -= step;
                     break;
                 case direction.left:
                     el.left = parseInt(el.left) - step + 'px';
+                    this.position.x -= step;
                     break;
                 case direction.down:
                     el.top = parseInt(el.top) + step + 'px';
+                    this.position.y += step;
                     break;
                 case direction.right:
                     el.left = parseInt(el.left) + step + 'px';
+                    this.position.x += step;
                     break;
                 default:
                     return;
@@ -118,7 +124,6 @@ Bullet.prototype = {
             setTimeout(function () {
                 me.move.call(me);
             }, 18)
-
         } else {
             this.destroy();
         }
