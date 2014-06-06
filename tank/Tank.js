@@ -63,6 +63,44 @@ Tank.prototype = {
     //添加buff
     addBuff: function (buff) {
         this.buffs.push(buff);
+        this.takeEffect(buff);
+    },
+    //附加buff效果
+    takeEffect: function (buff) {
+        var me = this;
+        this.el.style.background = 'red';
+        switch (buff.effect.name) {
+            case buff_type.addBulletSpeed:
+                me.firingSpeed += buff.effect.value;
+                break;
+            case buff_type.addMoveSpeed:
+                me.moveSpeed += buff.effect.value;
+                break;
+            default :
+                return;
+                break;
+        }
+        setTimeout(function () {
+            me.delBuff(buff);
+            me.buffOver(buff);
+        }, buff.duration);
+    },
+    //删除buff效果
+    buffOver: function (buff) {
+        this.el.style.background = 'white';
+        var me = this;
+        switch (buff.effect.name) {
+            case buff_type.addBulletSpeed:
+                me.firingSpeed -= buff.effect.value;
+                break;
+            case buff_type.addMoveSpeed:
+                me.moveSpeed -= buff.effect.value;
+                break;
+            default :
+                return;
+                break;
+        }
+
     },
     //删除buff
     delBuff: function (buff) {

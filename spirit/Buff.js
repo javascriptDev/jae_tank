@@ -75,7 +75,7 @@ var BuiltIn_Buff = {
         return new Buff({
             position: o.position,
             effect: Built_In_Effect.addMoveSpeed(),
-            duration: 5,
+            duration: 5000,
             appearance: BuiltIn_Appearance.buff2
         })
     },
@@ -84,7 +84,7 @@ var BuiltIn_Buff = {
         return new Buff({
             position: o.position,
             effect: Built_In_Effect.addBulletSpeed(),
-            duration: 20,
+            duration: 4000,
             appearance: BuiltIn_Appearance.buff1
         })
     }
