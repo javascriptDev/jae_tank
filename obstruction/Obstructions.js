@@ -27,13 +27,13 @@ function Obstruction(o) {
     //类型
     this.type = o.type || obstructionType.ignore;
     //渲染
-    this.render();
+  //  this.render();
 }
 
 Obstruction.prototype = {
     type: otype.obstruction,
 
-    render: function () {
+    render: function (map) {
         var position = this.position;
         var o = document.createElement('span');
         o.className = this.appearance.cls;

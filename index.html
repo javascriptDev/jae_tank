@@ -33,6 +33,44 @@
             border: 1px solid green;
         }
 
+        .buff-1 {
+            background: blue;
+        }
+
+        .buff-1:before {
+            content: '射速buff';
+            position: absolute;
+            color: white;
+        }
+
+        .buff-2 {
+            background: cornflowerblue;
+        }
+
+        .buff-2:before {
+            content: '移速buff';
+            position: absolute;
+            color: white;
+        }
+
+        .o-1 {
+            background: black;
+        }
+
+        .o-1:before, .o-2:before, .o-3:before {
+            color: white;
+            content: '障碍物';
+            position: absolute;
+        }
+
+        .o-2 {
+            background: aquamarine;
+        }
+
+        .o-3 {
+            background: orange;
+        }
+
     </style>
 
     <!--数据共享类-->
@@ -78,9 +116,9 @@
 <body>
 
 <div style="position:absolute;">
-  方向键:上 w
-            下 s
-       左 a
+    方向键:上 w
+    下 s
+    左 a
     右 d
     开炮:j
 

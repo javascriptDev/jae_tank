@@ -21,7 +21,7 @@ function Buff(o) {
     //外观
     this.appearance = o.appearance || BuiltIn_Appearance.buff1;
     //渲染
-    this.render();
+    //this.render();
 
 }
 Buff.prototype = {
@@ -47,7 +47,7 @@ Buff.prototype = {
     },
     end: function () {
     },
-    render: function () {
+    render: function (map) {
         var position = this.position;
         var o = document.createElement('span');
         o.className = this.appearance.cls;
@@ -69,7 +69,7 @@ var BuiltIn_Buff = {
     //增加移动速度
     addMoveSpeed: function (o) {
         return new Buff({
-            position: o.positon,
+            position: o.position,
             effect: Built_In_Effect.addMoveSpeed,
             duration: 5,
             appearance: BuiltIn_Appearance.buff2

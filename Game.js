@@ -2,8 +2,7 @@
  * Created by addison on 2014/5/20.
  */
 var Game = {
-    start: function
-        (o) {
+    start: function (o) {
         this.event = new Events();
         window.onload = function () {
             var keyBoard = {
@@ -26,9 +25,9 @@ var Game = {
                     })
                 ],
                 obstructions: [
-                    BuiltIn_Obstruction.a(30, 30),
-                    BuiltIn_Obstruction.b(50, 30),
-                    BuiltIn_Obstruction.b(80, 10)
+                    BuiltIn_Obstruction.a({x: 130, y: 130}),
+                    BuiltIn_Obstruction.b({x: 220, y: 110}),
+                    BuiltIn_Obstruction.b({x: 300, y: 240})
                 ],
                 tanks: [
                     BuiltIn_Tank.hard({position: {x: 100, y: 200}}),
