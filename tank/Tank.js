@@ -269,11 +269,28 @@ Tank.prototype = {
         buffs.forEach(function (buff) {
             var tp = buff.position;
             //条件是 子弹的xy在 坦克xy之内
-            if (( pos.x > tp.x && pos.x < (tp.x + buff.width)) && (pos.y > (tp.y - buff.height) && pos.y < tp.y)) {
-                buff.destroy();
-                this.pub(baseEvent.buffBegin, me, buff);
-                ishit = true;
+            switch (dire) {
+                case direction.up:
+                    ;
+                    break;
+                case direction.left:
+                    ;
+                    break;
+                case direction.down:
+                    ;
+                    break;
+                case direction.right:
+                    ;
+                    break;
+                default :
+                    return;
+                    break;
             }
+//            if (( pos.x > tp.x && pos.x < (tp.x + buff.width)) && (pos.y > (tp.y - buff.height) && pos.y < tp.y)) {
+//                buff.destroy();
+//                this.pub(baseEvent.buffBegin, me, buff);
+//                ishit = true;
+//            }
         })
         return ishit;
     }
