@@ -44,7 +44,6 @@ Bullet.prototype = {
                 ishit = true;
             }
         })
-        console.log('is hit obstruction' + ishit);
         return ishit;
     },
     //检测是否击中坦克
@@ -63,7 +62,6 @@ Bullet.prototype = {
                 break;
             }
         }
-        console.log('is hit tank' + ishit);
         return ishit;
     },
     //检测是否击中墙体
@@ -79,21 +77,9 @@ Bullet.prototype = {
         return hitWall;
 
     },
-    //销毁
-    destroy: function () {
-        this.el.parentNode.removeChild(this.el);
-        debugger;
-        ds.oMgr.del(otype.bullet, this);
-        var quarry = this.quarry, type;
-        if (quarry.type == otype.obstruction) {
-            type = dataType.obs;
-        } else if (quarry.type == otype.tank) {
-            type = dataType.tank;
-        }
-        ds.oMgr.del(type, quarry);
-    },
     //子弹移动检测
     move: function () {
+        console.log(ds.oMgr.getObj(dataType.tank)[0].position);
         var me = this;
         if (!this.isHitTank() && !this.isHitObstruction() && !this.isHitWall()) {
             //todo:移动子弹
@@ -165,6 +151,14 @@ Bullet.prototype = {
         return {
             top: top,
             left: left
+        }
+    },
+    //销毁
+    destroy: function () {
+        this.el.parentNode.removeChild(this.el);
+        ds.oMgr.del(dataType.bullet, this);
+        if (this.quarry) {
+            this.quarry.destroy.call(this.quarry);
         }
     }
 }

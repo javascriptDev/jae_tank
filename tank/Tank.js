@@ -104,7 +104,6 @@ Tank.prototype = {
     //获取每次移动的距离
     getMoveStep: function () {
         var step = this.moveSpeed / baseProperty.base_MoveSpeed;
-        console.log(step);
         return step;
     },
     // 旋转
@@ -377,6 +376,7 @@ Tank.prototype.util = {
         }
         return tank;
     },
+    //根据方向返回角度
     getDegByDirection: function () {
         var deg;
         switch (this.direction) {

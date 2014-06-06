@@ -11,7 +11,7 @@ var dataType = {
     //坦克
     tank: 'tanks',
     //子弹
-    bullet: 'bulltes'
+    bullet: 'bullets'
 }
 
 //DataShare 类

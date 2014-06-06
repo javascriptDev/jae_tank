@@ -22,6 +22,7 @@ var baseProperty = {
     base_MoveSpeed: 20
 }
 
+//组件类型
 var otype = {
     tank: 'tank',
     obstruction: 'obstruction',

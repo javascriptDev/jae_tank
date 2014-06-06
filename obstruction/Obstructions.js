@@ -27,7 +27,7 @@ function Obstruction(o) {
     //类型
     this.penetrability = o.penetrability || obstructionType.ignore;
     //渲染
-  //  this.render();
+    //  this.render();
 }
 
 Obstruction.prototype = {
@@ -46,6 +46,11 @@ Obstruction.prototype = {
         s.left = position.x + 'px';
         document.body.appendChild(o);
 
+    },
+    destroy: function () {
+        this.el.parentNode.removeChild(this.el);
+        ds.oMgr.del(dataType.obs, this);
     }
+
 }
 
