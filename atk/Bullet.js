@@ -106,7 +106,6 @@ Bullet.prototype = {
                     return;
                     break;
             }
-
             setTimeout(function () {
                 me.move.call(me);
             }, 18)

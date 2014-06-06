@@ -52,9 +52,6 @@ function Tank(o) {
     this.firingSpeed = baseProper.firingSpeed;
     //攻击cd时间(ms)
     this.cd = 300;
-
-
-
 }
 
 //设置基本方法
