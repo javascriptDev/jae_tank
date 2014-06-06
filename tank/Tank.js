@@ -279,6 +279,9 @@ Tank.prototype = {
                     }
                     break;
                 case direction.left:
+                    if ((pos.y + me.height > bp.y ) && (pos.y < bp.y + buff.height) && pos.x >= bp.x) {
+                        ishit = true;
+                    }
                     ;
                     break;
                 case direction.down:
@@ -291,13 +294,14 @@ Tank.prototype = {
                     return;
                     break;
             }
+            if (ishit) {
+                buff.destroy();
+                this.pub(baseEvent.buffBegin, me, buff);
+
+            }
 //
         })
-        if (ishit) {
-            buff.destroy();
-            this.pub(baseEvent.buffBegin, me, buff);
 
-        }
         return ishit;
     }
 }
