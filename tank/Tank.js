@@ -58,24 +58,29 @@ function Tank(o) {
 Tank.prototype = {
     type: otype.tank,
     showPropertyPanel: function () {
-        var me = this;
-        var base = document.createElement('div');
-        var bs = base.style;
-        base.className = 'tp-panel';
+        if (!this.ppanel) {
+            var me = this;
+            var base = document.createElement('div');
+            var bs = base.style;
+            base.className = 'tp-panel';
 
-        var html = '<div style="text-align: center;">' + this.id + '的属性面板</div>';
-        var show = ['hp', 'weapon', 'level', 'ep', 'moveSpeed', 'atk', 'firingSpeed', 'cd'];
-        show.forEach(function (item) {
-            html += ('<div class=p-item><span>' + item + ' : </span><div style="display: inline-block">' + me[item] + '</div></div>');
-        })
-        base.innerHTML = html;
-        //set css
-        bs.position = 'absolute';
-        bs.top = '50px';
-        bs.left = '50px';
-        bs.border = '1px solid red';
-        document.body.appendChild(base);
-
+            var html = '<div style="text-align: center;">' + this.id + '的属性面板</div>';
+            var show = ['hp', 'weapon', 'level', 'ep', 'moveSpeed', 'atk', 'firingSpeed', 'cd'];
+            show.forEach(function (item) {
+                html += ('<div class=p-item><span>' + item + ' : </span><div style="display: inline-block">' + me[item] + '</div></div>');
+            })
+            base.innerHTML = html;
+            //set css
+            bs.position = 'absolute';
+            bs.top = '50px';
+            bs.left = '50px';
+            bs.border = '1px solid red';
+            this.ppanel = base;
+            document.body.appendChild(base);
+        } else {
+            this.ppanel.parentNode.removeChild(this.ppanel);
+            delete  this.ppanel;
+        }
     },
     getLevel: function () {
         return this.builtInLevel;
