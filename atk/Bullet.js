@@ -75,7 +75,6 @@ Bullet.prototype = {
             hitWall = true;
         }
         return hitWall;
-
     },
     //子弹移动检测
     move: function () {
@@ -116,7 +115,6 @@ Bullet.prototype = {
     render: function (scope) {
         var bullet = document.createElement('span');
         var s = bullet.style;
-
         var pos = this.getPos();
         s.position = 'absolute';
         s.top = pos.top + 'px';

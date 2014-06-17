@@ -3,7 +3,7 @@
  */
 //坦克类
 function Tank(o) {
-    var defaultKeyBoard = {id: Math.random() * 10000, up: 'w', down: 's', left: 'a', right: 'd', fire: 'j', dump: 'k'};
+    var defaultKeyBoard = {id: Math.random() * 10000, up: 'w', down: 's', left: 'a', right: 'd', fire: 'j', dump: 'k', prop: 'm'};
     var secondKeyBoard = {id: Math.random() * 10000, up: 'up', down: 'down', left: 'left', right: 'right', fire: '+', dump: '-'};
 
 
@@ -57,6 +57,26 @@ function Tank(o) {
 //设置基本方法
 Tank.prototype = {
     type: otype.tank,
+    showPropertyPanel: function () {
+        var me = this;
+        var base = document.createElement('div');
+        var bs = base.style;
+        base.className = 'tp-panel';
+
+        var html = '<div style="text-align: center;">' + this.id + '的属性面板</div>';
+        var show = ['hp', 'weapon', 'level', 'ep', 'moveSpeed', 'atk', 'firingSpeed', 'cd'];
+        show.forEach(function (item) {
+            html += ('<div class=p-item><span>' + item + ' : </span><div style="display: inline-block">' + me[item] + '</div></div>');
+        })
+        base.innerHTML = html;
+        //set css
+        bs.position = 'absolute';
+        bs.top = '50px';
+        bs.left = '50px';
+        bs.border = '1px solid red';
+        document.body.appendChild(base);
+
+    },
     getLevel: function () {
         return this.builtInLevel;
     },
@@ -297,11 +317,8 @@ Tank.prototype = {
             if (ishit) {
                 buff.destroy();
                 this.pub(baseEvent.buffBegin, me, buff);
-
             }
-//
         })
-
         return ishit;
     }
 }
@@ -394,7 +411,7 @@ Tank.prototype.attack = {
     fire: function () {
         var me = this
         //判断是否cd到了
-        if (this.attack.isCooldown.call(this)) {
+        if (this.attack.isCoolDown.call(this)) {
             //设置cd开始时间，方便判断是否cd结束
             this.cdBegin = new Date().getTime();
             //实例化子弹(把最终攻击力 附加给 子弹.子弹自动检测攻击到的对象)
@@ -420,7 +437,7 @@ Tank.prototype.attack = {
         }
     },
     //判断是否过了cd
-    isCooldown: function () {
+    isCoolDown: function () {
         return (new Date().getTime() - this.cdBegin) >= this.cd ? true : false;
     },
     //计算攻击力
@@ -563,14 +580,14 @@ Tank.prototype.addEvent = function () {
                 right = kb.right,
                 fire = kb.fire,
                 dump = kb.dump,
-                turn = kb.turn;
+                turn = kb.turn,
+                prop = kb.prop;
+
 
             //删除 保存的移动的key
             if (char == up || char == down || char == left || char == right) {
                 me.deleteMoveKey();
             }
-
-            //按下新按键的同时,需要出于press的按键操作
 
             //添加到 key数组
             if (e.type == 'keydown') {
@@ -599,11 +616,15 @@ Tank.prototype.addEvent = function () {
                     case fire:
                         currentTank.attack.fire.call(currentTank);
                         break;
+                    case prop:
+                        currentTank.showPropertyPanel();
+                        break;
                     default:
                         return;
                         break;
                 }
             } else if (e.type == 'keyup') { //keyup
+
                 me.removeKey(char);
             }
         }
