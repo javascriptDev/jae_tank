@@ -8,7 +8,8 @@ var baseEvent = {
     overObs: 'tos',
     outObs: 'oos',
     tankMove: 'tankmove',
-    tankTurn:'tankTurn',
-    tankFire:'tankfire'
+    tankTurn: 'tankTurn',
+    tankFire: 'tankfire',
+    checkGameOver: 'go'
 
 }

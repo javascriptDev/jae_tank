@@ -191,10 +191,16 @@ Tank.prototype = {
     },
     //删除按键操作
     removeKey: function (key) {
+
         for (var i = 0, len = this.key.length; i < len; i++) {
-            if (this.key[i].key == key) {
-                this.key.splice(i, 1);
+            try {
+                if (this.key[i].key == key) {
+                    this.key.splice(i, 1);
+                }
+            } catch (e) {
+                console.dir(this.key);
             }
+
         }
     },
     //运行多按键动作
@@ -325,6 +331,9 @@ Tank.prototype = {
             }
         })
         return ishit;
+    },
+    destroy: function () {
+        console.log(this.id + 'is destroy');
     }
 }
 

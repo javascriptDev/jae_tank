@@ -157,6 +157,7 @@ Bullet.prototype = {
         if (this.quarry) {
             this.quarry.destroy.call(this.quarry);
         }
+        this.pub(baseEvent.checkGameOver,Game);
     }
 }
 

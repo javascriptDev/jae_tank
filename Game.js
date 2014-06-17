@@ -1,9 +1,10 @@
 /**
  * Created by addison on 2014/5/20.
  */
-var Game = {
+Game = {
     start: function (o) {
         this.event = new Events();
+        this.checkOver();
         window.onload = function () {
             var keyBoard = {
                 up: 'up',
@@ -41,7 +42,24 @@ var Game = {
 
         }
     },
+    checkOver: function () {
+        this.sub(baseEvent.checkGameOver, this, this.end);
+    },
     end: function () {
+        if (ds.oMgr.getObj(dataType.obs).length == 0) {
+            //alert('game over');
+            var div = document.createElement('div');
+            var s = div.style;
+            s.position = 'absolute';
+            s.top = '100px';
+            s.left = '100px';
+            s.width = '200px';
+            s.border = '1px solid red';
+            s.background = '#333';
+            s.color = 'white';
+            div.innerHTML = '<div>公告</div><div>game over</div><div><button id="replay">重玩</button></div>';
+            document.body.appendChild(div);
+        }
     },
     pause: function () {
     },
