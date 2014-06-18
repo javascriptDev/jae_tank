@@ -41,25 +41,25 @@ Bullet.prototype = {
             //条件是 子弹的xy在 障碍物xy之内
             switch (dire) {
                 case direction.up:
-                    if ((pos.x >= tp.x) && (pos.x <= tp.x + obstruction.width) && (pos.y <= tp.y + obstruction.height)) {
+                    if ((pos.x >= tp.x - me.width) && (pos.x <= tp.x + obstruction.width + me.width) && (pos.y <= tp.y + obstruction.height + me.height)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
                     break;
                 case direction.left:
-                    if ((pos.y + me.height >= tp.y) && (pos.y < tp.y + obstruction.height) && (pos.x <= tp.x + obstruction.width)) {
+                    if ((pos.y >= tp.y - me.height) && (pos.y < tp.y + obstruction.height + me.height) && (pos.x <= tp.x + obstruction.width + me.width)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
                     break;
                 case direction.down:
-                    if (pos.x >= tp.x && (pos.x < tp.x + obstruction.width) && (pos.y >= tp.y)) {
+                    if ((pos.x >= tp.x - me.width) && (pos.x < tp.x + obstruction.width + me.width) && (pos.y >= tp.y - me.height)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
                     break;
                 case direction.right:
-                    if ((pos.y + me.height >= tp.y) && (pos.y <= tp.y + obstruction.height) && pos.x >= tp.x) {
+                    if ((pos.y >= tp.y - me.height) && (pos.y <= tp.y + obstruction.height + me.height) && (pos.x >= tp.x + me.width / 2)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
@@ -152,21 +152,22 @@ Bullet.prototype = {
     getPos: function () {
         var top = 0, left = 0;
         switch (this.direction) {
+            //上下不偏移，左右偏移
             case direction.up:
                 top = this.position.y;
                 left = this.position.x + this.owner.width / 2 + this.width / 2;
                 break;
             case direction.left:
-                top = this.position.y + this.owner.height / 2 + this.width / 2;
-                left = this.position.x - this.width + this.width / 2;
+                top = this.position.y + this.owner.height / 2;
+                left = this.position.x - this.width / 2;
                 break;
             case direction.down:
-                top = this.position.y + this.owner.height + this.height;
+                top = this.position.y + this.owner.height + this.height / 2;
                 left = this.position.x + this.owner.width / 2 + this.width / 2;
                 break;
             case direction.right:
-                top = this.position.y + this.owner.height / 2 + this.width / 2;
-                left = this.position.x + this.owner.width + this.width;
+                top = this.position.y + this.owner.height / 2 + this.height / 2;
+                left = this.position.x + this.owner.width + this.width / 2;
                 break;
             default :
                 break;

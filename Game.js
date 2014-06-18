@@ -28,7 +28,8 @@ Game = {
                 obstructions: [
                     BuiltIn_Obstruction.a({x: 130, y: 130}),
                     BuiltIn_Obstruction.b({x: 220, y: 110}),
-                    BuiltIn_Obstruction.b({x: 300, y: 240})
+                    BuiltIn_Obstruction.b({x: 300, y: 240}),
+                    BuiltIn_Obstruction.b({x: 400, y: 240})
                 ],
                 tanks: [
                     BuiltIn_Tank.hard({position: {x: 100, y: 200}}),

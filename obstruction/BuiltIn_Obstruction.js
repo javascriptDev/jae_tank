@@ -9,6 +9,7 @@ var BuiltIn_Obstruction = {
             width: 40,
             height: 30,
             position: position || {x: 0, y: 0},
+            //可穿透性
             penetrability: obstructionType.impenetrable
         })
     },
