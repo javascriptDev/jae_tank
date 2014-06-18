@@ -290,6 +290,7 @@ Tank.prototype = {
         return hitWall;
 
     },
+    //检测是否吃到buff
     isHitBuff: function () {
         var me = this;
         var buffs = ds.oMgr.getObj(dataType.buff);
@@ -332,6 +333,7 @@ Tank.prototype = {
         })
         return ishit;
     },
+    //销毁
     destroy: function () {
         console.log(this.id + 'is destroy');
     }

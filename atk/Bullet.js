@@ -33,15 +33,41 @@ Bullet.prototype = {
         var me = this;
         var obstructions = ds.oMgr.getObj(dataType.obs);
         var me = this,
-            pos = this.position,
             dire = this.direction;
+        var pos = this.getPos();
         var ishit = false;
         obstructions.forEach(function (obstruction) {
             var tp = obstruction.position;
-            //条件是 子弹的xy在 坦克xy之内
-            if (( pos.x > tp.x && pos.x < (tp.x + obstruction.width)) && (pos.y > (tp.y - obstruction.height) && pos.y < tp.y)) {
-                me.quarry = obstruction;
-                ishit = true;
+            //条件是 子弹的xy在 障碍物xy之内
+            switch (dire) {
+                case direction.up:
+                    if ((pos.x >= tp.x) && (pos.x <= tp.x + obstruction.width) && (pos.y <= tp.y + obstruction.height)) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    break;
+                case direction.left:
+                    if ((pos.y + me.height >= tp.y) && (pos.y < tp.y + obstruction.height) && (pos.x <= tp.x + obstruction.width)) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    break;
+                case direction.down:
+                    if (pos.x >= tp.x && (pos.x < tp.x + obstruction.width) && (pos.y >= tp.y)) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    break;
+                case direction.right:
+                    if ((pos.y + me.height >= tp.y) && (pos.y <= tp.y + obstruction.height) && pos.x >= tp.x) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    ;
+                    break;
+                default :
+                    return;
+                    break;
             }
         })
         return ishit;
@@ -78,7 +104,6 @@ Bullet.prototype = {
     },
     //子弹移动检测
     move: function () {
-
         var me = this;
         if (!this.isHitTank() && !this.isHitObstruction() && !this.isHitWall()) {
             //todo:移动子弹
@@ -117,12 +142,13 @@ Bullet.prototype = {
         var s = bullet.style;
         var pos = this.getPos();
         s.position = 'absolute';
-        s.top = pos.top + 'px';
-        s.left = pos.left + 'px';
+        s.top = pos.y + 'px';
+        s.left = pos.x + 'px';
         bullet.className = this.appearance.cls;
         this.el = bullet;
         document.body.appendChild(this.el);
     },
+    //子弹的出发坐标
     getPos: function () {
         var top = 0, left = 0;
         switch (this.direction) {
@@ -146,8 +172,8 @@ Bullet.prototype = {
                 break;
         }
         return {
-            top: top,
-            left: left
+            y: top,
+            x: left
         }
     },
     //销毁
@@ -157,7 +183,7 @@ Bullet.prototype = {
         if (this.quarry) {
             this.quarry.destroy.call(this.quarry);
         }
-        this.pub(baseEvent.checkGameOver,Game);
+        this.pub(baseEvent.checkGameOver, Game);
     }
 }
 
