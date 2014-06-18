@@ -50,6 +50,10 @@ Obstruction.prototype = {
     destroy: function () {
         this.el.parentNode.removeChild(this.el);
         ds.oMgr.del(dataType.obs, this);
+    },
+    underAttack: function (val) {
+        console.log('obstruction is under attack');
+        this.destroy();
     }
 
 }

@@ -250,15 +250,41 @@ Tank.prototype = {
         var ishit = false;
         obstructions.forEach(function (obstruction) {
             var tp = obstruction.position;
-            //条件是 子弹的xy在 坦克xy之内
-            if (( pos.x > tp.x && pos.x < (tp.x + obstruction.width)) && (pos.y > (tp.y - obstruction.height) && pos.y < tp.y)) {
-                me.quarry = obstruction;
-                ishit = true;
+            switch (dire) {
+                case direction.up:
+                    if ((pos.x >= tp.x - me.width / 2) && (pos.x <= tp.x + obstruction.width + me.width / 2) && (pos.y <= tp.y + obstruction.height + me.height / 2)) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    break;
+                case direction.left:
+                    if ((pos.y >= tp.y - me.height / 2) && (pos.y < tp.y + obstruction.height + me.height / 2) && (pos.x <= tp.x + obstruction.width + me.width / 2)) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    break;
+                case direction.down:
+                    if ((pos.x >= tp.x - me.width / 2) && (pos.x < tp.x + obstruction.width + me.width / 2) && (pos.y >= tp.y - me.height / 2)) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    break;
+                case direction.right:
+                    if ((pos.y >= tp.y - me.height / 2) && (pos.y <= tp.y + obstruction.height + me.height / 2) && (pos.x >= tp.x + me.width / 2)) {
+                        me.quarry = obstruction;
+                        ishit = true;
+                    }
+                    ;
+                    break;
+                default :
+                    return;
+                    break;
             }
         })
+
         return ishit;
     },
-    //检测是否击中坦克
+//检测是否击中坦克
     isHitTank: function () {
 //        var tanks = ds.oMgr.getObj(dataType.tank);
 //        var me = this;
@@ -277,7 +303,7 @@ Tank.prototype = {
 //        return ishit;
         return false;
     },
-    //检测是否击中墙体
+//检测是否击中墙体
     isHitWall: function () {
         //ds.oMgr.getObj(dataType.wall);
         //todo:临时设置墙的范围
@@ -290,7 +316,7 @@ Tank.prototype = {
         return hitWall;
 
     },
-    //检测是否吃到buff
+//检测是否吃到buff
     isHitBuff: function () {
         var me = this;
         var buffs = ds.oMgr.getObj(dataType.buff);
@@ -333,9 +359,12 @@ Tank.prototype = {
         })
         return ishit;
     },
-    //销毁
+//销毁
     destroy: function () {
         console.log(this.id + 'is destroy');
+    },
+    underAttack: function (val) {
+        this.attack.underAttack.call(this, val);
     }
 }
 
@@ -351,9 +380,10 @@ Tank.prototype.move = {
                 console.log(this.buffs);
 
             } else if (this.isHitObstruction()) {
-
+                console.log('tank is hit obstruction');
 
             } else if (this.isHitWall()) {
+                console.log('tank is hit wall');
 
             } else {
                 this.animate(this.position);
@@ -461,6 +491,10 @@ Tank.prototype.attack = {
         //todo:buff攻击力需要加上
         //基础攻击力+武器自身攻击+子弹附加效果攻击
         //  return (+this.weapon.bullet({}).atk);
+    },
+    underAttack: function () {
+        console.log('tank is under attack');
+        this.destroy();
     }
 }
 

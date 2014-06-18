@@ -41,25 +41,25 @@ Bullet.prototype = {
             //条件是 子弹的xy在 障碍物xy之内
             switch (dire) {
                 case direction.up:
-                    if ((pos.x >= tp.x - me.width) && (pos.x <= tp.x + obstruction.width + me.width) && (pos.y <= tp.y + obstruction.height + me.height)) {
+                    if ((pos.x >= tp.x - me.width / 2) && (pos.x <= tp.x + obstruction.width + me.width / 2) && (pos.y <= tp.y + obstruction.height + me.height / 2)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
                     break;
                 case direction.left:
-                    if ((pos.y >= tp.y - me.height) && (pos.y < tp.y + obstruction.height + me.height) && (pos.x <= tp.x + obstruction.width + me.width)) {
+                    if ((pos.y >= tp.y - me.height / 2) && (pos.y < tp.y + obstruction.height + me.height / 2) && (pos.x <= tp.x + obstruction.width + me.width / 2)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
                     break;
                 case direction.down:
-                    if ((pos.x >= tp.x - me.width) && (pos.x < tp.x + obstruction.width + me.width) && (pos.y >= tp.y - me.height)) {
+                    if ((pos.x >= tp.x - me.width / 2) && (pos.x < tp.x + obstruction.width + me.width / 2) && (pos.y >= tp.y - me.height / 2)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
                     break;
                 case direction.right:
-                    if ((pos.y >= tp.y - me.height) && (pos.y <= tp.y + obstruction.height + me.height) && (pos.x >= tp.x + me.width / 2)) {
+                    if ((pos.y >= tp.y - me.height / 2) && (pos.y <= tp.y + obstruction.height + me.height / 2) && (pos.x >= tp.x + me.width / 2)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
@@ -182,7 +182,7 @@ Bullet.prototype = {
         this.el.parentNode.removeChild(this.el);
         ds.oMgr.del(dataType.bullet, this);
         if (this.quarry) {
-            this.quarry.destroy.call(this.quarry);
+            this.quarry.underAttack.call(this.quarry, this.atk);
         }
         this.pub(baseEvent.checkGameOver, Game);
     }
