@@ -1,7 +1,14 @@
 /**
  * Created by addison on 2014/5/19.
  */
-//坦克类
+
+/*
+ 坦克类
+
+ @class Tank
+
+ @param {object} o - 实例化对象用的参数
+ */
 function Tank(o) {
     var defaultKeyBoard = {id: Math.random() * 10000, up: 'w', down: 's', left: 'a', right: 'd', fire: 'j', dump: 'k', prop: 'm'};
     var secondKeyBoard = {id: Math.random() * 10000, up: 'up', down: 'down', left: 'left', right: 'right', fire: '+', dump: '-'};
@@ -56,7 +63,15 @@ function Tank(o) {
 
 //设置基本方法
 Tank.prototype = {
+    /**
+     * @property { string } object type
+     */
     type: otype.tank,
+    /**
+     * 显示坦克属性面板
+     *
+     * @method showPropertyPanel
+     */
     showPropertyPanel: function () {
         if (!this.ppanel) {
             var me = this;
@@ -82,15 +97,33 @@ Tank.prototype = {
             delete  this.ppanel;
         }
     },
+    /**
+     * 获取坦克等级
+     *
+     * @method getLevel
+     * @return { number } 坦克等级
+     */
     getLevel: function () {
         return this.builtInLevel;
     },
-    //添加buff
+
+    /**
+     * 添加buff 并增加属性
+     *
+     * @method addBuff
+     * @param { Buff } buff - buff对象
+     */
     addBuff: function (buff) {
         this.buffs.push(buff);
         this.takeEffect(buff);
     },
-    //附加buff效果
+
+    /**
+     * 根据buff 附加坦克属性
+     *
+     * @method takeEffect
+     * @param { Buff } buff - Buff 对象
+     */
     takeEffect: function (buff) {
         var me = this;
         this.el.style.background = 'red';
@@ -110,7 +143,13 @@ Tank.prototype = {
             me.buffOver(buff);
         }, buff.duration);
     },
-    //删除buff效果
+
+    /**
+     * buff cd到，删除buff效果,恢复坦克属性
+     *
+     * @method buffOver
+     * @param { Buff } buff - 过期的buff
+     */
     buffOver: function (buff) {
         this.el.style.background = 'white';
         var me = this;
@@ -127,7 +166,13 @@ Tank.prototype = {
         }
 
     },
-    //删除buff
+
+    /**
+     * 从buff数组删除过期的buff
+     *
+     * @method delBuff
+     * @param { Buff } buff - 过期的buff
+     */
     delBuff: function (buff) {
         //遍历自身buff,根据传参删除相应buff
         for (var i = 0, len = this.buffs.length; i < len; i++) {
@@ -138,6 +183,14 @@ Tank.prototype = {
         }
         console.log('tank=' + this.id + ' -- buff Name=' + buff.effect + '  end');
     },
+
+    /**
+     * 获取坦克的基础属性
+     *
+     * @method getBaseProperty
+     * @param { Number } level - 坦克等级
+     * @return {Object} the properties of tank
+     */
     getBaseProperty: function (level) {
         var base;
         this.getLevel().forEach(function (item) {
@@ -148,7 +201,17 @@ Tank.prototype = {
         })
         return base;
     },
-    //动画
+
+    /**
+     * 动画
+     *
+     * @method animate
+     * @param { Object } o - 动画参数
+     * {
+     *   x : 动画 x 坐标
+     *   y : 动画 y 坐标
+     * }
+     */
     animate: function (o) {
         var el = this.el;
         el.style.webkitTransition = '-webkit-transform ' + 0.1 + 's ';
@@ -158,12 +221,25 @@ Tank.prototype = {
             el.style.webkitTransform += ' translate(' + o.x + 'px,' + o.y + 'px)';
         }
     },
-    //获取每次移动的距离
+
+    /**
+     * 获取每次移动的距离
+     *
+     * @method getMoveStep
+     * @return { Number } 每次移动的距离
+     */
     getMoveStep: function () {
         var step = this.moveSpeed / baseProperty.base_MoveSpeed;
         return step;
     },
-    // 旋转
+
+    /**
+     *坦克旋转动画基础函数
+     *
+     * @method rotate
+     * @param { deg } rotate - 旋转角度
+     * @param { Function } cb - 旋转完毕 回调函数
+     */
     rotate: function (rotate, cb) {
         var el = this.el;
         var after = function (e) {
@@ -183,13 +259,29 @@ Tank.prototype = {
             el.style.webkitTransform += ' rotateZ(' + rotate + 'deg)';
         }
     },
-    //添加按键操作
+
+    /**
+     * 多按键情况下，记录所欲按键
+     *
+     * @method addKey
+     * @param { Object } o
+     * {
+     *   key  : { String ( char code)} - 按键对应的 char code
+     *   para : { Object } key down 事件 参数e
+     * }
+     */
     addKey: function (o) {
         if (!this.isExist(o)) {
             this.key.push(o);
         }
     },
-    //删除按键操作
+
+    /**
+     *从按键数组内删除对应的按键
+     *
+     * @method removeKey
+     * @param { String } key - 需要删除的按键 char code
+     */
     removeKey: function (key) {
 
         for (var i = 0, len = this.key.length; i < len; i++) {
@@ -203,22 +295,28 @@ Tank.prototype = {
 
         }
     },
-    //运行多按键动作
+
+    /**
+     * 遍历 按键数组内的函数，并且执行
+     *
+     * @method runKeyArr
+     */
     runKeyArr: function () {
         var me = this;
         this.runHandler = setInterval(function () {
             me.key.forEach(function (item) {
-                if (Array.prototype.contains.call(me.key, item)) {
-                    me.keyDownEvent(item.para);
-                }
+                me.keyDownEvent(item.para);
             })
         }, 18)
-
-//        else {
-//            clearInterval(this.runHandler);
-//        }
     },
-    //按键操作是否存在
+
+    /**
+     * 检测按键数组是否已经包含新按键
+     *
+     * @method isExist
+     * @param { String (key code)} o - 新按键对应的char code
+     * @return { Bollean } 返回 按键数组是否包含参数按键
+     */
     isExist: function (o) {
         var isExist = false;
         if (Array.prototype.contains.call(this.key, o)) {
@@ -226,21 +324,30 @@ Tank.prototype = {
         }
         return isExist;
     },
-    //如果 按键数组包含方向键,则删除.避免斜着走
+
+    /**
+     * 检测按键数组是否同时包含两个方向键，如果有则删除(避免坦克斜着走)
+     *
+     * @method deleteMoveKey
+     */
     deleteMoveKey: function () {
         var me = this;
         this.key.forEach(function (item, index) {
                 var kb = me.keyBoard;
                 var key = item.key;
-
                 if (key == kb.up || key == kb.down || key == kb.left || key == kb.right) {
                     me.key.splice(index, 1);
                 }
-
             }
         )
     },
-    //撞击障碍物
+
+    /**
+     * 坦克移动过程中，检测是否撞击到障碍物
+     *
+     * @method isHitObstruction
+     * @return { Bollean } 是否撞击障碍物
+     */
     isHitObstruction: function () {
         var me = this;
         var obstructions = ds.oMgr.getObj(dataType.obs);
@@ -284,7 +391,13 @@ Tank.prototype = {
 
         return ishit;
     },
-//检测是否击中坦克
+
+    /**
+     * 坦克移动过程中，检测是否撞击到坦克
+     *
+     * @method isHitObTank
+     * @return { Bollean } 是否撞击坦克
+     */
     isHitTank: function () {
 //        var tanks = ds.oMgr.getObj(dataType.tank);
 //        var me = this;
@@ -303,7 +416,13 @@ Tank.prototype = {
 //        return ishit;
         return false;
     },
-//检测是否击中墙体
+
+    /**
+     * 坦克移动过程中，检测是否撞击到墙体
+     *
+     * @method isHitWall
+     * @return { Bollean } 是否撞击墙体
+     */
     isHitWall: function () {
         //ds.oMgr.getObj(dataType.wall);
         //todo:临时设置墙的范围
@@ -316,7 +435,13 @@ Tank.prototype = {
         return hitWall;
 
     },
-//检测是否吃到buff
+
+    /**
+     * 坦克移动过程中，检测是否迟到buff
+     *
+     * @method isHitBuff
+     * @return { Bollean } 是否撞击Buff
+     */
     isHitBuff: function () {
         var me = this;
         var buffs = ds.oMgr.getObj(dataType.buff);
@@ -359,18 +484,35 @@ Tank.prototype = {
         })
         return ishit;
     },
-//销毁
+
+    /**
+     * 销毁坦克
+     *
+     * @method destroy
+     */
     destroy: function () {
         console.log(this.id + 'is destroy');
     },
+
+    /**
+     * 坦克被攻击时，
+     *
+     * @method underAttack
+     */
     underAttack: function (val) {
         this.attack.underAttack.call(this, val);
     }
 }
 
+
 //移动相关
 Tank.prototype.move = {
-    //向上移动
+    /**
+     * 向上移动
+     *
+     * @method up
+     * @param { String } dire - 移动的方向
+     */
     up: function (dire) {
         //移动
         var me = this;
@@ -454,6 +596,12 @@ Tank.prototype.move = {
 
 //进攻相关
 Tank.prototype.attack = {
+
+    /**
+     * 坦克开火
+     *
+     * @method fire
+     */
     fire: function () {
         var me = this
         //判断是否cd到了
@@ -482,16 +630,34 @@ Tank.prototype.attack = {
             ds.oMgr.add(dataType.bullet, bullet);
         }
     },
-    //判断是否过了cd
+
+    /**
+     * 检测是否过了开火 cd
+     *
+     * @method isCoolDown
+     * @reutrn { Boolean } 开火cd 是否好了
+     */
     isCoolDown: function () {
         return (new Date().getTime() - this.cdBegin) >= this.cd ? true : false;
     },
-    //计算攻击力
+
+    /**
+     * 计算最终攻击力
+     *
+     * @method calcAtk
+     * @return { Number } 最终的攻击力
+     */
     calcAtk: function () {
         //todo:buff攻击力需要加上
         //基础攻击力+武器自身攻击+子弹附加效果攻击
         //  return (+this.weapon.bullet({}).atk);
     },
+
+    /**
+     * 处理被攻击时候，怎么掉血
+     *
+     * @method underAttack
+     */
     underAttack: function () {
         console.log('tank is under attack');
         this.destroy();
@@ -547,7 +713,11 @@ Tank.prototype.setNativeProperties = function () {
     })
 }
 
-//初始化
+/**
+ * 构造函数初始化函数
+ *
+ * @method init
+ */
 Tank.prototype.init = function () {
     var tank = document.createElement('div');
     tank.className = this.appearance.cls;
@@ -559,7 +729,13 @@ Tank.prototype.init = function () {
     this.runKeyArr();
 }
 
-//订阅事件
+/**
+ * 订阅事件
+ *
+ * @method subScribeEvent
+ * 1.buff开始事件
+ * 2.buff结束事件
+ */
 Tank.prototype.subScribeEvent = function () {
     //订阅吃精灵事件
     this.sub(baseEvent.buffBegin, this, this.addBuff)
@@ -569,7 +745,12 @@ Tank.prototype.subScribeEvent = function () {
 
 //工具函数
 Tank.prototype.util = {
-    //根据按键判断是那个tank
+    /**
+     * 根据键位返回玩家
+     *
+     * @method getTankByBb
+     * @param { Object } kb - 键位
+     */
     getTankByKb: function (kb) {
         var tank;
         var allTank = ds.oMgr.getObj(dataType.tank);
@@ -588,7 +769,13 @@ Tank.prototype.util = {
         }
         return tank;
     },
-    //根据方向返回角度
+
+    /**
+     * 根据运动方向返回物体旋转角度
+     *
+     * @method getDegByDirection
+     * @return { Number } 角度
+     */
     getDegByDirection: function () {
         var deg;
         switch (this.direction) {
@@ -733,7 +920,11 @@ Tank.prototype.addEvent = function () {
     }
 }
 
-//渲染坦克
+/**
+ * 渲染坦克到dom
+ *
+ * @method render
+ *///渲染坦克
 Tank.prototype.render = function (scope) {
     //scope 就是 map
     var style = this.el.style;
