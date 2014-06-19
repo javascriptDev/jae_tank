@@ -724,14 +724,16 @@ Tank.prototype.init = function () {
     var canvas = document.createElement('canvas');
     var c = canvas.getContext('2d');
 
-    tank.style.height = this.height + 'px';
-    tank.style.width = this.width + 'px';
-    c.width = this.width;
-    c.height = this.height;
+    var h = this.height,
+        w = this.width;
+    tank.style.height = h + 'px';
+    tank.style.width = w + 'px';
+    canvas.width = this.width;
+    canvas.height = this.height;
 
-    c.rect(0, 40, 60, 60);
-    c.rect(10, 40, 40, 40);
-    c.rect(25, 0, 10, 60);
+    c.rect(0, h * 0.4, w, h * 0.6);
+    c.rect(0.2 * w, w * 0.4, w * 0.6, h * 0.4);
+    c.rect(w * 0.45, 0, w * 0.1, h * 0.5);
     c.stroke();
 
     tank.appendChild(canvas);
