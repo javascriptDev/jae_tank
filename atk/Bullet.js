@@ -47,7 +47,7 @@ Bullet.prototype = {
                     }
                     break;
                 case direction.left:
-                    if ((pos.y >= tp.y - me.height / 2) && (pos.y < tp.y + obstruction.height + me.height / 2) && (pos.x <= tp.x + obstruction.width + me.width / 2)) {
+                    if ((pos.y >= tp.y - me.height) && (pos.y < tp.y + obstruction.height + me.height) && (pos.x <= tp.x + obstruction.width + me.width / 2)) {
                         me.quarry = obstruction;
                         ishit = true;
                     }
@@ -106,7 +106,6 @@ Bullet.prototype = {
     move: function () {
         var me = this;
         if (!this.isHitTank() && !this.isHitObstruction() && !this.isHitWall()) {
-            //todo:移动子弹
             var el = this.el.style;
             var step = this.speed / 5;
             switch (this.direction) {

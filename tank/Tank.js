@@ -43,8 +43,8 @@ function Tank(o) {
     //储存当前操作的集合
     this.key = [];
     //坦克的宽高
-    this.width = 30;
-    this.height = 30;
+    this.width = 60;
+    this.height = 60;
     //初始化
     this.init();
     //等级不同拥有不同的属性
@@ -721,6 +721,20 @@ Tank.prototype.setNativeProperties = function () {
 Tank.prototype.init = function () {
     var tank = document.createElement('div');
     tank.className = this.appearance.cls;
+    var canvas = document.createElement('canvas');
+    var c = canvas.getContext('2d');
+
+    tank.style.height = this.height + 'px';
+    tank.style.width = this.width + 'px';
+    c.width = this.width;
+    c.height = this.height;
+
+    c.rect(0, 40, 60, 60);
+    c.rect(10, 40, 40, 40);
+    c.rect(25, 0, 10, 60);
+    c.stroke();
+
+    tank.appendChild(canvas);
     this.el = tank;
     this.setNativeProperties();
     this.addEvent();
