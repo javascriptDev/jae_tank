@@ -735,7 +735,6 @@ Tank.prototype.init = function () {
     c.rect(0.2 * w, w * 0.4, w * 0.6, h * 0.4);
     c.rect(w * 0.45, 0, w * 0.1, h * 0.5);
     c.stroke();
-
     tank.appendChild(canvas);
     this.el = tank;
     this.setNativeProperties();
